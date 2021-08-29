@@ -36,8 +36,9 @@ contract MyNFT is ERC721, Ownable {
         precision is 18 
         */
         Checker newCheck = new Checker();
-        require(newCheck._checkBalERC20(0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD,recipient) >= 1000000000000000000000, "Not enough ERC20 provided.");
-        
+        if (newCheck._checkBalERC20(0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD,recipient) < 1000000000000000000000) {
+        revert("Not enough ERC20 provided.");
+        }
         _tokenIds.increment();
         uint256 newItemId = _tokenIds.current();
         _mint(recipient, newItemId);
